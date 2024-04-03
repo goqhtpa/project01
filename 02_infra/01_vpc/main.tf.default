@@ -1,0 +1,20 @@
+provider "aws" {
+    region = "ap-northeast-2"
+}
+// 기본 vpc 정보
+data "aws_vpc" "default" {
+    default = true
+}
+
+// Subnet 정보
+data "aws_subnets" "example" {
+    filter {
+        name   = "vpc-id"
+        values = [data.aws_vpc.default.id]
+    }
+}
+
+// default vpc id 출력
+output "vpc-id" {
+    value = data.aws_vpc.default.id
+}
